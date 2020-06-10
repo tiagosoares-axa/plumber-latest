@@ -65,7 +65,7 @@ function(input_integer = 1){
       time_taken <- end_time-start_time
       
       return(c(round(as.numeric(time_taken),3),
-	   containing as.numeric(substr(utils::packageVersion("glmnet"),1,1)),
+	   as.numeric(substr(utils::packageVersion("glmnet"),1,1)),
        riskcost_prediction,
        propensity_prediction$delta_nonpremiumvars,
        propensity_prediction$delta_premiumvars))
