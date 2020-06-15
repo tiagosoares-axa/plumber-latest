@@ -28,7 +28,7 @@ PolData.Driver.Driver_DateOfBirth.Val.1 <<- "09/10/1946"
 
 
 #* @get /get_prediction
-function(input_integer = 11){ 	
+function(input_integer = 1){ 	
 
     test_noload <-
       function(veh_lookup = HC_veh_lookup,
