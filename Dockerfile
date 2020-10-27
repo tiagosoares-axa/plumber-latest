@@ -1,16 +1,23 @@
-FROM trestletech/plumber:latest
+FROM rocker/r-ver:3.6.1
 
-#ENV http_proxy "http://git-proxy:8080"
-#ENV https_proxy "http://wthproxy:8080"
+# this is the trestletech/plumber layers, now on a versioned R base
 
-RUN R -e "options(repos = list(CRAN = 'https://cran.microsoft.com/snapshot/2020-01-06')); install.packages('magrittr')" 
-RUN R -e "options(repos = list(CRAN = 'https://cran.microsoft.com/snapshot/2020-01-06')); install.packages('HDtweedie')" 
-RUN R -e "options(repos = list(CRAN = 'https://cran.microsoft.com/snapshot/2020-01-06')); install.packages('glmnet')" 
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+  git-core \
+  libssl-dev \
+  libcurl4-gnutls-dev \
+  curl \
+  libsodium-dev \
+  libxml2-dev
+
+RUN install2.r plumber
 
 EXPOSE 8000
 
 USER 1001
 
 COPY / app/
+
+ENTRYPOINT ["R", "-e", "pr <- plumber::plumb(rev(commandArgs())[1]); pr$run(host='0.0.0.0', port=8000, swagger=TRUE)"]
 
 CMD ["/app/plumber_script.R"]
