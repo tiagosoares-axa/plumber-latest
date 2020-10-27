@@ -3,11 +3,6 @@ FROM rocker/r-ver:3.6.1
 # this is the trestletech/plumber layers, now on a versioned R base
 
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
-  git-core \
-  libssl-dev \
-  libcurl4-gnutls-dev \
-  curl \
-  libsodium-dev \
   libxml2-dev
 
 RUN install2.r plumber
